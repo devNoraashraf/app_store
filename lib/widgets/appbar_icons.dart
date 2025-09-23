@@ -12,7 +12,7 @@ class AppbarIcons extends StatelessWidget {
       onTap: () => function(),
       child: Container(
         decoration: BoxDecoration(
-          color: ColorsManger.white,
+          color: ColorsManager.white,
           shape: BoxShape.circle,
         ),
         child: Padding(

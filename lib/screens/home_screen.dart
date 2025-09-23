@@ -10,30 +10,15 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
+        elevation: 0,
+        backgroundColor: ColorsManager.scaffoldBackground,
         title: const Text('Home Screen'),
-        leading: Row(
-          children: [
-            Flexible(
-              child: AppbarIcons(
-                function: () {
-                  // Define your function here
-                },
-                icon: IconlyBold.category,
-                backgroundColor: ColorsManger.primary,
-              ),
-            ),
-            const SizedBox(width: 10),
-            Flexible(
-              child: AppbarIcons(
-                function: () {
-                  // Define your function here
-                },
-                icon: IconlyBold.search,
-                backgroundColor: ColorsManger.primary,
-              ),
-            ),
-          ],
+        leading: AppbarIcons(
+          function: () {
+            // Define your function here
+          },
+          icon: IconlyBold.category,
+          backgroundColor: ColorsManager.primary,
         ),
         actions: [
           AppbarIcons(
@@ -41,11 +26,35 @@ class HomeScreen extends StatelessWidget {
               // Define your function here
             },
             icon: IconlyBold.user3,
-            backgroundColor: ColorsManger.primary,
+            backgroundColor: ColorsManager.error,
           ),
         ],
       ),
-      body: const Center(child: Text('Welcome to the Home Screen!')),
+      body: Column(
+        children: [
+          const SizedBox(height: 30),
+          TextField(
+            keyboardType: TextInputType.text,
+            decoration: InputDecoration(
+              hintText: "Search",
+              prefixIcon: Icon(IconlyLight.search, color: ColorsManager.grey),
+              filled: true,
+              fillColor: ColorsManager.lightGrey,
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: BorderSide(
+                  color: ColorsManager.darkGrey,
+                  width: 1.0,
+                ),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: BorderSide(color: ColorsManager.error, width: 1.0),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
