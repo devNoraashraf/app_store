@@ -5,6 +5,19 @@ class CategoryWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Stack(
+      children: [
+        ClipRRect(
+          borderRadius: BorderRadius.circular(12),
+          child: Image.asset(
+            "assets/images/p1.png",
+            height: 100,
+            width: 100,
+            fit: BoxFit.cover,
+          ),
+
+        )
+      ],
+    );
   }
 }
