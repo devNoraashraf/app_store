@@ -1,3 +1,4 @@
+import 'package:app_store/consts/colors_manger.dart';
 import 'package:flutter/material.dart';
 
 class CategoryWidget extends StatelessWidget {
@@ -5,19 +6,24 @@ class CategoryWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        ClipRRect(
-          borderRadius: BorderRadius.circular(12),
-          child: Image.asset(
-            "assets/images/p1.png",
-            height: 100,
-            width: 100,
-            fit: BoxFit.cover,
-          ),
-
-        )
-      ],
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        color: ColorsManager.lightPrimary,
+        child: Stack(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(12),
+              child: Image.asset(
+                "assets/images/p1.png",
+                height: 100,
+                width: 100,
+                fit: BoxFit.cover,
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
