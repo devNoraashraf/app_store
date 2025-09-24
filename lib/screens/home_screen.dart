@@ -111,7 +111,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 crossAxisCount: 2,
                 mainAxisSpacing: 0,
                 crossAxisSpacing: 2,
-                childAspectRatio: 0.68,
+                childAspectRatio: 0.85,
               ),
               itemBuilder: (context, index) => CardWidget(),
             ),
