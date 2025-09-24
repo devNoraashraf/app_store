@@ -1,6 +1,7 @@
 import 'package:app_store/consts/colors_manger.dart';
 import 'package:app_store/widgets/appbar_icons.dart' show AppbarIcons;
 import 'package:app_store/widgets/sale_widget.dart';
+import 'package:app_store/widgets/textfiled.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 
@@ -12,12 +13,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final TextEditingController _searchController = TextEditingController();
-  @override
-  void dispose() {
-    _searchController.dispose();
-    super.dispose();
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -46,27 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Column(
         children: [
           const SizedBox(height: 30),
-          TextField(
-            controller: _searchController,
-            keyboardType: TextInputType.text,
-            decoration: InputDecoration(
-              hintText: "Search",
-              prefixIcon: Icon(IconlyLight.search, color: ColorsManager.grey),
-              filled: true,
-              fillColor: ColorsManager.lightGrey,
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
-                borderSide: BorderSide(
-                  color: ColorsManager.darkGrey,
-                  width: 1.0,
-                ),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
-                borderSide: BorderSide(color: ColorsManager.error, width: 1.0),
-              ),
-            ),
-          ),
+          Textfield(),
           const SizedBox(height: 20),
           SaleWidget(),
         ],
