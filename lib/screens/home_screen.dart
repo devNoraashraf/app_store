@@ -1,5 +1,6 @@
 import 'package:app_store/consts/colors_manger.dart';
 import 'package:app_store/widgets/appbar_icons.dart' show AppbarIcons;
+import 'package:app_store/widgets/sale_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 
@@ -13,7 +14,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController _searchController = TextEditingController();
   @override
-   void dispose() {
+  void dispose() {
     _searchController.dispose();
     super.dispose();
   }
@@ -66,6 +67,8 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
           ),
+          const SizedBox(height: 20),
+          SaleWidget(),
         ],
       ),
     );

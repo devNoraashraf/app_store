@@ -1,0 +1,30 @@
+import 'package:app_store/consts/colors_manger.dart';
+import 'package:flutter/material.dart';
+
+class SaleWidget extends StatelessWidget {
+  const SaleWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        height: size.height * 0.28,
+        width: size.width * 1,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              ColorsManager.lightError,
+              ColorsManager.blue.withOpacity(0.7),
+            ],
+            begin: Alignment.centerLeft,
+            end: Alignment.centerRight,
+          ),
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Image.asset("assets/images/p1.png", fit: BoxFit.cover),
+      ),
+    );
+  }
+}
