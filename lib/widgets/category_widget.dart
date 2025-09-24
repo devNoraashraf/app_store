@@ -18,7 +18,19 @@ class CategoryWidget extends StatelessWidget {
                 "assets/images/p1.png",
                 height: 100,
                 width: 100,
-                fit: BoxFit.cover,
+                fit: BoxFit.fill,
+              ),
+            ),
+            Align(
+              alignment: Alignment.center,
+              child: Text(
+                "shoes",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  backgroundColor: ColorsManager.lightGrey.withOpacity(0.5),
+                ),
               ),
             ),
           ],
