@@ -52,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
           // ✅ CardSwiper بيعرض SaleWidget
           SizedBox(
-            height: 250,
+            height: 280,
             child: CardSwiper(
               controller: _swiperController,
               cardsCount: _saleWidgets.length,
@@ -81,7 +81,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   color:
                       isActive
                           ? ColorsManager.primary
-                          : ColorsManager.lightGrey,
+                          : ColorsManager.lightPrimary,
                   borderRadius: BorderRadius.circular(12),
                 ),
               );
