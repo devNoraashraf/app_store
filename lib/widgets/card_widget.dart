@@ -1,4 +1,5 @@
 import 'package:app_store/consts/colors_manger.dart';
+import 'package:app_store/screens/product_details.dart';
 import 'package:flutter/material.dart';
 
 class CardWidget extends StatelessWidget {
@@ -7,7 +8,12 @@ class CardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => ProductDetails()),
+        );
+      },
       child: Container(
         width: double.infinity,
         height: 200,

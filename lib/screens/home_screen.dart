@@ -1,4 +1,5 @@
 import 'package:app_store/consts/colors_manger.dart';
+import 'package:app_store/screens/products_screen.dart';
 import 'package:app_store/widgets/appbar_icons.dart' show AppbarIcons;
 import 'package:app_store/widgets/card_widget.dart';
 import 'package:app_store/widgets/sale_widget.dart';
@@ -6,6 +7,7 @@ import 'package:app_store/widgets/textfiled.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:page_transition/page_transition.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -90,16 +92,37 @@ class _HomeScreenState extends State<HomeScreen> {
                 );
               }),
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                "All Products",
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: ColorsManager.darkPrimary,
+            Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    "All Products",
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: ColorsManager.darkPrimary,
+                    ),
+                  ),
                 ),
-              ),
+                Spacer(),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: AppbarIcons(
+                    function: () {
+                      Navigator.push(
+                        context,
+                        PageTransition(
+                          type: PageTransitionType.fade,
+                          child: const ProductsScreen(),
+                        ),
+                      );
+                    },
+                    icon: IconlyBold.filter,
+                    backgroundColor: ColorsManager.lightPrimary,
+                  ),
+                ),
+              ],
             ),
 
             GridView.builder(
