@@ -3,6 +3,7 @@ import 'package:app_store/widgets/appbar_icons.dart' show AppbarIcons;
 import 'package:app_store/widgets/sale_widget.dart';
 import 'package:app_store/widgets/textfiled.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -13,6 +14,16 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  // ✅ هنا بدال الصور هنعمل Widgets مختلفة
+  final List<Widget> _saleWidgets = const [
+    SaleWidget(), // الأول
+    SaleWidget(), // التاني
+    SaleWidget(), // التالت (ممكن تعملي نسخة تانية مختلفة)
+  ];
+
+  final CardSwiperController _swiperController = CardSwiperController();
+  int _current = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,17 +32,13 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: ColorsManager.scaffoldBackground,
         title: const Text('Home Screen'),
         leading: AppbarIcons(
-          function: () {
-            // Define your function here
-          },
+          function: () {},
           icon: IconlyBold.category,
           backgroundColor: ColorsManager.primary,
         ),
         actions: [
           AppbarIcons(
-            function: () {
-              // Define your function here
-            },
+            function: () {},
             icon: IconlyBold.user3,
             backgroundColor: ColorsManager.error,
           ),
@@ -41,8 +48,45 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           const SizedBox(height: 10),
           Textfield(),
-          const SizedBox(height: 5),
-          SaleWidget(),
+          const SizedBox(height: 10),
+
+          // ✅ CardSwiper بيعرض SaleWidget
+          SizedBox(
+            height: 250,
+            child: CardSwiper(
+              controller: _swiperController,
+              cardsCount: _saleWidgets.length,
+              onSwipe: (prev, next, direction) {
+                if (next != null) setState(() => _current = next);
+                return true;
+              },
+              cardBuilder: (context, index, percentX, percentY) {
+                return _saleWidgets[index]; // 👈 بدل الصورة حطينا SaleWidget
+              },
+            ),
+          ),
+
+          const SizedBox(height: 8),
+          // ✅ مؤشّر نقاط
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: List.generate(_saleWidgets.length, (i) {
+              final isActive = i == _current;
+              return AnimatedContainer(
+                duration: const Duration(milliseconds: 250),
+                margin: const EdgeInsets.symmetric(horizontal: 4),
+                height: 8,
+                width: isActive ? 20 : 8,
+                decoration: BoxDecoration(
+                  color:
+                      isActive
+                          ? ColorsManager.primary
+                          : ColorsManager.lightGrey,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              );
+            }),
+          ),
         ],
       ),
     );
