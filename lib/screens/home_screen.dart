@@ -1,4 +1,5 @@
 import 'package:app_store/consts/colors_manger.dart';
+import 'package:app_store/screens/categories_screen.dart';
 import 'package:app_store/screens/products_screen.dart';
 import 'package:app_store/widgets/appbar_icons.dart' show AppbarIcons;
 import 'package:app_store/widgets/card_widget.dart';
@@ -35,7 +36,15 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: ColorsManager.scaffoldBackground,
         title: const Text('Home Screen'),
         leading: AppbarIcons(
-          function: () {},
+          function: () {
+            Navigator.push(
+              context,
+              PageTransition(
+                type: PageTransitionType.fade,
+                child: const CategoriesScreen(),
+              ),
+            );
+          },
           icon: IconlyBold.category,
           backgroundColor: ColorsManager.primary,
         ),
