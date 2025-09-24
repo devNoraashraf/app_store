@@ -1,5 +1,6 @@
 import 'package:app_store/consts/colors_manger.dart';
 import 'package:app_store/widgets/appbar_icons.dart' show AppbarIcons;
+import 'package:app_store/widgets/card_widget.dart';
 import 'package:app_store/widgets/sale_widget.dart';
 import 'package:app_store/widgets/textfiled.dart';
 import 'package:flutter/material.dart';
@@ -44,50 +45,78 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-      body: Column(
-        children: [
-          const SizedBox(height: 10),
-          Textfield(),
-          const SizedBox(height: 10),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 10),
+            Textfield(),
+            const SizedBox(height: 10),
 
-          // ✅ CardSwiper بيعرض SaleWidget
-          SizedBox(
-            height: 280,
-            child: CardSwiper(
-              controller: _swiperController,
-              cardsCount: _saleWidgets.length,
-              onSwipe: (prev, next, direction) {
-                if (next != null) setState(() => _current = next);
-                return true;
-              },
-              cardBuilder: (context, index, percentX, percentY) {
-                return _saleWidgets[index]; // 👈 بدل الصورة حطينا SaleWidget
-              },
+            // ✅ CardSwiper بيعرض SaleWidget
+            SizedBox(
+              height: 280,
+              child: CardSwiper(
+                controller: _swiperController,
+                cardsCount: _saleWidgets.length,
+                onSwipe: (prev, next, direction) {
+                  if (next != null) setState(() => _current = next);
+                  return true;
+                },
+                cardBuilder: (context, index, percentX, percentY) {
+                  return _saleWidgets[index]; // 👈 بدل الصورة حطينا SaleWidget
+                },
+              ),
             ),
-          ),
 
-          const SizedBox(height: 8),
-          // ✅ مؤشّر نقاط
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: List.generate(_saleWidgets.length, (i) {
-              final isActive = i == _current;
-              return AnimatedContainer(
-                duration: const Duration(milliseconds: 250),
-                margin: const EdgeInsets.symmetric(horizontal: 4),
-                height: 8,
-                width: isActive ? 20 : 8,
-                decoration: BoxDecoration(
-                  color:
-                      isActive
-                          ? ColorsManager.primary
-                          : ColorsManager.lightPrimary,
-                  borderRadius: BorderRadius.circular(12),
+            const SizedBox(height: 8),
+            // ✅ مؤشّر نقاط
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: List.generate(_saleWidgets.length, (i) {
+                final isActive = i == _current;
+                return AnimatedContainer(
+                  duration: const Duration(milliseconds: 250),
+                  margin: const EdgeInsets.symmetric(horizontal: 4),
+                  height: 8,
+                  width: isActive ? 20 : 8,
+                  decoration: BoxDecoration(
+                    color:
+                        isActive
+                            ? ColorsManager.primary
+                            : ColorsManager.lightPrimary,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                );
+              }),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                "All Products",
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: ColorsManager.darkPrimary,
                 ),
-              );
-            }),
-          ),
-        ],
+              ),
+            ),
+
+            GridView.builder(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+
+              itemCount: 4,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                mainAxisSpacing: 0,
+                crossAxisSpacing: 2,
+                childAspectRatio: 0.68,
+              ),
+              itemBuilder: (context, index) => CardWidget(),
+            ),
+          ],
+        ),
       ),
     );
   }
