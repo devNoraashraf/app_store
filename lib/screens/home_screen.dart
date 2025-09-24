@@ -3,8 +3,20 @@ import 'package:app_store/widgets/appbar_icons.dart' show AppbarIcons;
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  final TextEditingController _searchController = TextEditingController();
+  @override
+   void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +46,7 @@ class HomeScreen extends StatelessWidget {
         children: [
           const SizedBox(height: 30),
           TextField(
+            controller: _searchController,
             keyboardType: TextInputType.text,
             decoration: InputDecoration(
               hintText: "Search",
