@@ -1,6 +1,8 @@
 import 'package:app_store/consts/colors_manger.dart';
+import 'package:app_store/models/products_model.dart' show products;
 import 'package:app_store/screens/categories_screen.dart';
 import 'package:app_store/screens/products_screen.dart';
+import 'package:app_store/services/api_handler.dart';
 import 'package:app_store/widgets/appbar_icons.dart' show AppbarIcons;
 import 'package:app_store/widgets/card_widget.dart';
 import 'package:app_store/widgets/sale_widget.dart';
@@ -24,10 +26,21 @@ class _HomeScreenState extends State<HomeScreen> {
     SaleWidget(), // التاني
     SaleWidget(), // التالت (ممكن تعملي نسخة تانية مختلفة)
   ];
-
+  List<products> _products = [];
   final CardSwiperController _swiperController = CardSwiperController();
   int _current = 0;
-
+@override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // استدعاء الدالة هنا
+    fetchProducts();
+  }
+  void fetchProducts() async {
+    final products = await ApiHandler().getAllProducts();
+    setState(() {
+     
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -25,6 +25,7 @@ class products {
     images = json['images'].cast<String>();
     creationAt = json['creationAt'];
     updatedAt = json['updatedAt'];
+
   }
 
   Map<String, dynamic> toJson() {
@@ -41,6 +42,9 @@ class products {
     data['creationAt'] = this.creationAt;
     data['updatedAt'] = this.updatedAt;
     return data;
+  }
+  static List<products> fromJsonList(List list) {
+    return list.map((item) => products.fromJson(item)).toList();
   }
 }
 
