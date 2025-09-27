@@ -73,7 +73,9 @@ class _HomeScreenState extends State<HomeScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 10),
-            SearchField(),
+            SearchField(
+             
+            ),
 
             // ✅ CardSwiper
             SizedBox(
@@ -200,3 +202,4 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
+

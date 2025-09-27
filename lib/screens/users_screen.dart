@@ -1,5 +1,6 @@
 import 'package:app_store/models/user_model.dart';
 import 'package:app_store/services/api_handler.dart';
+import 'package:app_store/widgets/textfiled.dart';
 import 'package:flutter/material.dart';
 
 class UsersScreen extends StatefulWidget {
@@ -41,18 +42,12 @@ class _UsersScreenState extends State<UsersScreen> {
           // Search bar
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
-            child: TextField(
+            child: SearchField(
               onChanged: (v) => setState(() => _query = v.trim().toLowerCase()),
-              decoration: InputDecoration(
-                hintText: 'Search by name or email',
-                prefixIcon: const Icon(Icons.search),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                contentPadding: const EdgeInsets.symmetric(vertical: 12),
-              ),
+              
             ),
           ),
+          
           Expanded(
             child: FutureBuilder<List<UserModel>>(
               future: _future,
