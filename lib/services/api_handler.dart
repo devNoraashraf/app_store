@@ -17,4 +17,5 @@ class ApiHandler {
     }
     return tempList.map((item) => products.fromJson(item)).toList();
   }
+  
 }

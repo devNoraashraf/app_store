@@ -1,75 +1,89 @@
 import 'package:app_store/consts/colors_manger.dart';
+import 'package:app_store/models/products_model.dart' show products;
 import 'package:app_store/screens/product_details.dart';
 import 'package:flutter/material.dart';
 
 class CardWidget extends StatelessWidget {
-  const CardWidget({super.key});
+  final products product;   // ✅ لازم هنا
+  const CardWidget({super.key, required this.product});
 
   @override
   Widget build(BuildContext context) {
+    final imageUrl = (product.images != null && product.images!.isNotEmpty)
+        ? product.images!.first
+        : null;
+
     return InkWell(
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => ProductDetails()),
+          MaterialPageRoute(
+            builder: (_) => ProductDetails(product: product), // ✅ نبعته للتفاصيل
+          ),
         );
       },
       child: Container(
         width: double.infinity,
-        height: 200,
+        height: 220,
         margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
         decoration: BoxDecoration(
-          color: ColorsManager.lightBlue,
           gradient: LinearGradient(
             colors: [ColorsManager.lightGrey, ColorsManager.grey],
           ),
           borderRadius: BorderRadius.circular(20),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black26,
-              blurRadius: 10,
-              offset: Offset(0, 5),
-            ),
+          boxShadow: const [
+            BoxShadow(color: Colors.black26, blurRadius: 10, offset: Offset(0, 5)),
           ],
         ),
         child: Padding(
-          padding: const EdgeInsets.all(15.0),
+          padding: const EdgeInsets.all(12),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Flexible(
-                child: Row(
-                  children: [
-                    Text(
-                      "155 \$",
-                      style: TextStyle(
-                        fontSize: 24,
-                        color: const Color.fromARGB(255, 17, 16, 16),
-                      ),
+              Row(
+                children: [
+                  Text(
+                    '${product.price ?? 0} \$',
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.black87,
                     ),
-                    Spacer(),
-                    Icon(Icons.favorite, color: Colors.red),
-                  ],
+                  ),
+                  const Spacer(),
+                  const Icon(Icons.favorite_border, color: Colors.red),
+                ],
+              ),
+              const SizedBox(height: 8),
+              Expanded(
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(16),
+                  child: imageUrl == null
+                      ? Image.asset(
+                          "assets/images/p1.png",
+                          fit: BoxFit.cover,
+                          width: double.infinity,
+                        )
+                      : Image.network(
+                          imageUrl,
+                          fit: BoxFit.cover,
+                          width: double.infinity,
+                          errorBuilder: (_, __, ___) => Image.asset(
+                            "assets/images/p1.png",
+                            fit: BoxFit.cover,
+                            width: double.infinity,
+                          ),
+                        ),
                 ),
               ),
-              SizedBox(height: 1),
-              Image.asset(
-                "assets/images/p1.png",
-                height: 110,
-                width: 150,
-                fit: BoxFit.cover,
-              ),
-              SizedBox(height: 1),
-              Flexible(
-                child: Row(
-                  children: [
-                    Text(
-                      "Smart Watch",
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: const Color.fromARGB(255, 10, 9, 9),
-                      ),
-                    ),
-                  ],
+              const SizedBox(height: 8),
+              Text(
+                product.title ?? 'Product',
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
             ],

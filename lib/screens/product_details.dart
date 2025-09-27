@@ -1,13 +1,23 @@
+import 'package:app_store/models/products_model.dart';
 import 'package:flutter/material.dart';
 
 class ProductDetails extends StatelessWidget {
-  const ProductDetails({super.key});
+  final products product; // ✅ استخدمه
+
+  const ProductDetails({
+    super.key,
+    required this.product,
+  });
 
   @override
   Widget build(BuildContext context) {
+    final imageUrl = (product.images?.isNotEmpty ?? false)
+        ? product.images!.first
+        : null;
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Product Details"),
+        title: Text(product.title ?? "Product Details"),
         centerTitle: true,
         actions: const [
           Padding(
@@ -21,27 +31,33 @@ class ProductDetails extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // صورة المنتج
+            // صورة المنتج من الشبكة
             Center(
-              child: Image.asset(
-                "assets/images/p1.png",
-                height: 250,
-                fit: BoxFit.contain,
-              ),
+              child: imageUrl != null
+                  ? Image.network(
+                      imageUrl,
+                      height: 250,
+                      fit: BoxFit.contain,
+                      errorBuilder: (_, __, ___) => const Icon(
+                        Icons.broken_image_outlined,
+                        size: 120,
+                      ),
+                    )
+                  : const Icon(Icons.image_not_supported, size: 120),
             ),
             const SizedBox(height: 20),
 
             // اسم المنتج
-            const Text(
-              "Product Name",
-              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+            Text(
+              product.title ?? "Unnamed product",
+              style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 10),
 
             // السعر
-            const Text(
-              "Price: \$120",
-              style: TextStyle(
+            Text(
+              "Price: \$${product.price ?? 0}",
+              style: const TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w600,
                 color: Colors.green,
@@ -50,26 +66,22 @@ class ProductDetails extends StatelessWidget {
             const SizedBox(height: 20),
 
             // الوصف
-            const Text(
-              "This is a detailed description of the product. "
-              "It explains the main features, specifications, and any "
-              "additional information the customer might want to know.",
-              style: TextStyle(fontSize: 16, height: 1.4),
+            Text(
+              product.description ??
+                  "No description provided for this product.",
+              style: const TextStyle(fontSize: 16, height: 1.4),
             ),
             const SizedBox(height: 30),
 
-            // زرار إضافة للسلة
+            // زر إضافة للسلة
             SizedBox(
               width: double.infinity,
               child: ElevatedButton.icon(
                 onPressed: () {
-                  // هنا تضيف وظيفة إضافة للسلة
+                  // TODO: add-to-cart logic
                 },
                 icon: const Icon(Icons.add_shopping_cart),
-                label: const Text(
-                  "Add to Cart",
-                  style: TextStyle(fontSize: 18),
-                ),
+                label: const Text("Add to Cart", style: TextStyle(fontSize: 18)),
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 14),
                 ),

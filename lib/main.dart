@@ -1,8 +1,15 @@
+import 'package:app_store/providers/products_provider.dart' show ProductsProvider;
 import 'package:app_store/screens/home_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart' show ChangeNotifierProvider;
 
 void main() {
-  runApp(const MyApp());
+ runApp(
+    ChangeNotifierProvider(
+      create: (_) => ProductsProvider(), // هنجيب الداتا مرة واحدة
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
