@@ -56,12 +56,12 @@ class _HomeScreenState extends State<HomeScreen> {
           AppbarIcons(
             function: () {
               Navigator.push(
-              context,
-              PageTransition(
-                type: PageTransitionType.fade,
-                child: const UsersScreen(),
-              ),
-            );
+                context,
+                PageTransition(
+                  type: PageTransitionType.fade,
+                  child: const UsersScreen(),
+                ),
+              );
             },
             icon: IconlyBold.user3,
             backgroundColor: ColorsManager.error,
@@ -73,8 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 10),
-            Textfield(),
-            const SizedBox(height: 10),
+            SearchField(),
 
             // ✅ CardSwiper
             SizedBox(
@@ -104,9 +103,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: 8,
                   width: isActive ? 20 : 8,
                   decoration: BoxDecoration(
-                    color: isActive
-                        ? ColorsManager.primary
-                        : ColorsManager.lightPrimary,
+                    color:
+                        isActive
+                            ? ColorsManager.primary
+                            : ColorsManager.lightPrimary,
                     borderRadius: BorderRadius.circular(12),
                   ),
                 );
@@ -182,15 +182,15 @@ class _HomeScreenState extends State<HomeScreen> {
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   itemCount: prov.items.length,
-                  gridDelegate:
-                      const SliverGridDelegateWithFixedCrossAxisCount(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     mainAxisSpacing: 8,
                     crossAxisSpacing: 8,
                     childAspectRatio: 0.72,
                   ),
-                  itemBuilder: (context, index) =>
-                      CardWidget(product: prov.items[index]),
+                  itemBuilder:
+                      (context, index) =>
+                          CardWidget(product: prov.items[index]),
                 );
               },
             ),

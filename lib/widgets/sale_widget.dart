@@ -7,24 +7,21 @@ class SaleWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Container(
-        height: size.height * 0.28,
-        width: size.width * 1,
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              ColorsManager.lightError,
-              ColorsManager.blue.withOpacity(0.7),
-            ],
-            begin: Alignment.centerLeft,
-            end: Alignment.centerRight,
-          ),
-          borderRadius: BorderRadius.circular(20),
+    return Container(
+      height: size.height * 0.28,
+      width: size.width * 1,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [
+            ColorsManager.lightError,
+            ColorsManager.blue.withOpacity(0.7),
+          ],
+          begin: Alignment.centerLeft,
+          end: Alignment.centerRight,
         ),
-        child: Image.asset("assets/images/p1.png", fit: BoxFit.cover),
+        borderRadius: BorderRadius.circular(20),
       ),
+      child: Image.asset("assets/images/p1.png", fit: BoxFit.cover),
     );
   }
 }
