@@ -1,6 +1,7 @@
 import 'package:app_store/consts/colors_manger.dart';
 import 'package:app_store/screens/categories_screen.dart';
 import 'package:app_store/screens/products_screen.dart';
+import 'package:app_store/screens/users_screen.dart' show UsersScreen;
 import 'package:app_store/widgets/appbar_icons.dart' show AppbarIcons;
 import 'package:app_store/widgets/card_widget.dart';
 import 'package:app_store/widgets/sale_widget.dart';
@@ -53,7 +54,15 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         actions: [
           AppbarIcons(
-            function: () {},
+            function: () {
+              Navigator.push(
+              context,
+              PageTransition(
+                type: PageTransitionType.fade,
+                child: const UsersScreen(),
+              ),
+            );
+            },
             icon: IconlyBold.user3,
             backgroundColor: ColorsManager.error,
           ),
