@@ -22,9 +22,9 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final List<Widget> _saleWidgets = const [
-    SaleWidget(),
-    SaleWidget(),
-    SaleWidget(),
+    SaleWidget(imagePath: 'assets/images/p1.png'),
+    SaleWidget(imagePath: 'assets/images/p2.png'),
+    SaleWidget(imagePath: 'assets/images/p3.png'),
   ];
 
   final CardSwiperController _swiperController = CardSwiperController();

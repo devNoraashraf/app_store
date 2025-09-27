@@ -2,8 +2,8 @@ import 'package:app_store/consts/colors_manger.dart';
 import 'package:flutter/material.dart';
 
 class SaleWidget extends StatelessWidget {
-  const SaleWidget({super.key});
-
+  const SaleWidget({super.key, required this.imagePath});
+ final String imagePath;
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -21,7 +21,10 @@ class SaleWidget extends StatelessWidget {
         ),
         borderRadius: BorderRadius.circular(20),
       ),
-      child: Image.asset("assets/images/p1.png", fit: BoxFit.cover),
+      child: Image.asset(
+        imagePath,
+        fit: BoxFit.cover,
+      ),
     );
   }
 }
