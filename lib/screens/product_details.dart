@@ -25,10 +25,9 @@ class _ProductDetailsState extends State<ProductDetails> {
     final imageUrl = (p.images?.isNotEmpty ?? false) ? p.images!.first : null;
     final title =
         p.title?.trim().isNotEmpty == true ? p.title! : "Product Details";
-    final description =
-        p.description?.trim().isNotEmpty == true
-            ? p.description!
-            : "No description provided for this product.";
+    final description = p.description?.trim().isNotEmpty == true
+        ? p.description!
+        : "No description provided for this product.";
     final price = (p.price ?? 0).toDouble();
 
     // محاولة جلب اسم التصنيف إن وُجد
@@ -37,8 +36,9 @@ class _ProductDetailsState extends State<ProductDetails> {
         final c = p.category;
         if (c == null) return null;
         final dynamic maybeName = (c as dynamic).name ?? (c as dynamic).title;
-        if (maybeName is String && maybeName.trim().isNotEmpty)
+        if (maybeName is String && maybeName.trim().isNotEmpty) {
           return maybeName as String;
+        }
         return null;
       } catch (_) {
         return null;
@@ -53,9 +53,9 @@ class _ProductDetailsState extends State<ProductDetails> {
         onIncrement: () => setState(() => _qty += 1),
         onAddToCart: () {
           context.read<CartProvider>().add(p, qty: _qty);
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(const SnackBar(content: Text('Added to cart')));
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Added to cart')),
+          );
         },
       ),
       body: CustomScrollView(
@@ -69,14 +69,7 @@ class _ProductDetailsState extends State<ProductDetails> {
             backgroundColor: cs.surface,
             foregroundColor: cs.onSurface,
             expandedHeight: 320,
-            title: Text(
-              title,
-              style: theme.textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.w600,
-              ),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-            ),
+            title: null, // العنوان اتشال من فوق الصورة
             centerTitle: true,
             leading: IconButton(
               icon: const Icon(Icons.arrow_back_rounded),
@@ -89,11 +82,6 @@ class _ProductDetailsState extends State<ProductDetails> {
                 onPressed: () {
                   // TODO: Share logic
                 },
-              ),
-              IconButton(
-                tooltip: 'Cart',
-                icon: const Icon(Icons.shopping_cart_outlined),
-                onPressed: () => Navigator.pushNamed(context, '/cart'),
               ),
             ],
             flexibleSpace: FlexibleSpaceBar(
@@ -110,13 +98,12 @@ class _ProductDetailsState extends State<ProductDetails> {
                       child: Image.network(
                         imageUrl,
                         fit: BoxFit.cover,
-                        errorBuilder:
-                            (_, __, ___) => const Center(
-                              child: Icon(
-                                Icons.broken_image_outlined,
-                                size: 120,
-                              ),
-                            ),
+                        errorBuilder: (_, __, ___) => const Center(
+                          child: Icon(
+                            Icons.broken_image_outlined,
+                            size: 120,
+                          ),
+                        ),
                         loadingBuilder: (context, child, loadingProgress) {
                           if (loadingProgress == null) return child;
                           return const Center(
@@ -135,17 +122,28 @@ class _ProductDetailsState extends State<ProductDetails> {
             ),
           ),
 
+          // المحتوى تحت الصورة
           SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // سطر السعر + شارة التصنيف + زر Favorite
+                  // عنوان المنتج
                   Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _PriceTag(price: price),
+                      Expanded(
+                        child: Text(
+                          title,
+                          style: theme.textTheme.headlineSmall?.copyWith(
+                            fontWeight: FontWeight.w800,
+                            height: 1.2,
+                          ),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
                       const SizedBox(width: 12),
                       if (categoryName != null)
                         Chip(
@@ -153,9 +151,19 @@ class _ProductDetailsState extends State<ProductDetails> {
                           avatar: const Icon(Icons.category_outlined, size: 18),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12),
+                            side: BorderSide(color: cs.outlineVariant), // ✅ صح
                           ),
-                          side: BorderSide(color: cs.outlineVariant),
                         ),
+                    ],
+                  ),
+
+                  const SizedBox(height: 12),
+
+                  // السعر + زر الفيفوريت
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      _PriceTag(price: price),
                       const Spacer(),
                       _FavButton(),
                     ],
@@ -241,7 +249,7 @@ class _PriceTag extends StatelessWidget {
       decoration: ShapeDecoration(
         color: cs.primaryContainer,
         shape: StadiumBorder(
-          side: BorderSide(color: cs.primary.withOpacity(.25)),
+          side: BorderSide(color: cs.primary.withOpacity(.25)), // ✅ صح
         ),
         shadows: [
           BoxShadow(
@@ -281,7 +289,7 @@ class _FavButtonState extends State<_FavButton> {
         duration: const Duration(milliseconds: 200),
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
-          color: _fav ? cs.errorContainer : cs.surfaceContainerHighest,
+          color: _fav ? cs.errorContainer : cs.surfaceVariant,
           borderRadius: BorderRadius.circular(14),
           border: Border.all(color: cs.outlineVariant),
         ),
@@ -405,8 +413,7 @@ class _BottomBar extends StatelessWidget {
               child: SizedBox(
                 height: 52,
                 child: ElevatedButton.icon(
-                  onPressed:
-                      onAddToCart, // ← نستخدم الكولباك القادم من الشاشة الأم
+                  onPressed: onAddToCart,
                   icon: const Icon(Icons.add_shopping_cart_rounded),
                   label: Text(
                     'Add to Cart • \$${(price * qty).toStringAsFixed(2)}',
@@ -451,7 +458,7 @@ class _QtyControl extends StatelessWidget {
         height: 52,
         padding: const EdgeInsets.symmetric(horizontal: 8),
         decoration: BoxDecoration(
-          color: cs.surfaceContainerHighest,
+          color: cs.surfaceVariant,
           borderRadius: BorderRadius.circular(14),
           border: Border.all(color: cs.outlineVariant),
         ),
@@ -464,8 +471,8 @@ class _QtyControl extends StatelessWidget {
                 child: Text(
                   '$qty',
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.w700,
-                  ),
+                        fontWeight: FontWeight.w700,
+                      ),
                 ),
               ),
             ),

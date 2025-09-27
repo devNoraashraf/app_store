@@ -2,7 +2,7 @@ import 'package:app_store/consts/colors_manger.dart';
 import 'package:flutter/material.dart';
 
 class AppbarIcons extends StatelessWidget {
-  const AppbarIcons({super.key, required this.function, required this.icon, required this.backgroundColor});
+  const AppbarIcons({super.key, required this.function, required this.icon, required this.backgroundColor, required int size});
   final Function function;
   final IconData icon;
   final Color backgroundColor;

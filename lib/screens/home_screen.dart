@@ -58,7 +58,8 @@ class _HomeScreenState extends State<HomeScreen> {
             );
           },
           icon: IconlyBold.category,
-          backgroundColor: ColorsManager.darkBlue,
+          size: 24,
+          backgroundColor:const Color.fromARGB(255, 177, 64, 208)
         ),
         actions: [
           AppbarIcons(
@@ -72,6 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
               );
             },
             icon: IconlyBold.user3,
+            size: 24,
             backgroundColor: ColorsManager.error,
           ),
           const SizedBox(width: 1),
@@ -158,6 +160,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       );
                     },
+                    size: 30,
                     icon: IconlyBold.filter,
                     backgroundColor: ColorsManager.primary,
                   ),
