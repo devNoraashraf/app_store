@@ -17,5 +17,13 @@ class ApiHandler {
     }
     return tempList.map((item) => products.fromJson(item)).toList();
   }
-  
+  ///////////////////////////////////////////////////////////////////////////
+  Future<List<Category>> getAllCategories() async {
+    final response = await http.get(
+      Uri.parse('https://api.escuelajs.co/api/v1/categories'),
+    );
+    final data = jsonDecode(response.body) as List;
+    return data.map((item) => Category.fromJson(item)).toList();
+  }
+
 }
