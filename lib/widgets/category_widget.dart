@@ -21,15 +21,15 @@ class CategoryWidget extends StatelessWidget {
             child: Image.network(
               category.image ?? "",
               fit: BoxFit.cover,
-              errorBuilder: (_, __, ___) =>
-                  const Icon(Icons.broken_image, size: 50),
+              errorBuilder:
+                  (_, __, ___) => const Icon(Icons.broken_image, size: 50),
             ),
           ),
           Align(
             alignment: Alignment.center,
             child: Container(
               padding: const EdgeInsets.all(4),
-              color: Colors.black54,
+              color: const Color.fromARGB(134, 203, 157, 219),
               child: Text(
                 category.name ?? "",
                 style: const TextStyle(

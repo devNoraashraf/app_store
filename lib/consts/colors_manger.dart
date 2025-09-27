@@ -35,4 +35,8 @@ class ColorsManager {
 
   // 🏠 خلفية الـ Scaffold
  static Color scaffoldBackground = const Color(0xFFF9F9F9);
+ static Color purple = const Color(0xFF6750A4);
+  static Color lightPurple = const Color(0xFF7F67BE);
+  static Color darkPurple = const Color(0xFF381E72);
+  static Color green = const Color(0xFF388E3C);
 }

@@ -36,9 +36,17 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         elevation: 0,
         backgroundColor: ColorsManager.scaffoldBackground,
-        title: const Text('Home Screen'),
+        title: Text(
+          ' STORE',
+          style: TextStyle(
+            color: ColorsManager.darkPurple,
+            fontWeight: FontWeight.bold,
+            fontSize: 24,
+          ),
+        ),
         leading: AppbarIcons(
           function: () {
             Navigator.push(
@@ -50,7 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
             );
           },
           icon: IconlyBold.category,
-          backgroundColor: ColorsManager.primary,
+          backgroundColor: ColorsManager.darkBlue,
         ),
         actions: [
           AppbarIcons(
@@ -66,6 +74,16 @@ class _HomeScreenState extends State<HomeScreen> {
             icon: IconlyBold.user3,
             backgroundColor: ColorsManager.error,
           ),
+          const SizedBox(width: 1),
+          IconButton(
+            tooltip: 'Cart',
+            icon: Icon(
+              Icons.shopping_cart_outlined,
+              size: 28,
+              color: ColorsManager.green,
+            ),
+            onPressed: () => Navigator.pushNamed(context, '/cart'),
+          ),
         ],
       ),
       body: SingleChildScrollView(
@@ -73,9 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 10),
-            SearchField(
-             
-            ),
+            SearchField(),
 
             // ✅ CardSwiper
             SizedBox(
@@ -123,9 +139,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Text(
                     "All Products",
                     style: TextStyle(
-                      fontSize: 18,
+                      fontSize: 20,
                       fontWeight: FontWeight.bold,
-                      color: ColorsManager.darkPrimary,
+                      color: ColorsManager.purple,
                     ),
                   ),
                 ),
@@ -143,7 +159,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       );
                     },
                     icon: IconlyBold.filter,
-                    backgroundColor: ColorsManager.lightPrimary,
+                    backgroundColor: ColorsManager.primary,
                   ),
                 ),
               ],
@@ -202,4 +218,3 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
-

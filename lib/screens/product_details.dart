@@ -1,5 +1,8 @@
+import 'package:app_store/consts/colors_manger.dart';
 import 'package:app_store/models/products_model.dart';
+import 'package:app_store/providers/cart_provider.dart' show CartProvider;
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ProductDetails extends StatefulWidget {
   final products product;
@@ -27,10 +30,10 @@ class _ProductDetailsState extends State<ProductDetails> {
             ? p.description!
             : "No description provided for this product.";
     final price = (p.price ?? 0).toDouble();
+
     // محاولة جلب اسم التصنيف إن وُجد
     final categoryName = () {
       try {
-        // قد يكون لدى Category حقل name أو title وفق الموديل لديك
         final c = p.category;
         if (c == null) return null;
         final dynamic maybeName = (c as dynamic).name ?? (c as dynamic).title;
@@ -49,7 +52,7 @@ class _ProductDetailsState extends State<ProductDetails> {
         onDecrement: () => setState(() => _qty = (_qty > 1) ? _qty - 1 : 1),
         onIncrement: () => setState(() => _qty += 1),
         onAddToCart: () {
-          // TODO: Implement add-to-cart logic
+          context.read<CartProvider>().add(p, qty: _qty);
           ScaffoldMessenger.of(
             context,
           ).showSnackBar(const SnackBar(content: Text('Added to cart')));
@@ -90,9 +93,7 @@ class _ProductDetailsState extends State<ProductDetails> {
               IconButton(
                 tooltip: 'Cart',
                 icon: const Icon(Icons.shopping_cart_outlined),
-                onPressed: () {
-                  // TODO: Navigate to cart
-                },
+                onPressed: () => Navigator.pushNamed(context, '/cart'),
               ),
             ],
             flexibleSpace: FlexibleSpaceBar(
@@ -128,7 +129,6 @@ class _ProductDetailsState extends State<ProductDetails> {
                     const Center(
                       child: Icon(Icons.image_not_supported, size: 120),
                     ),
-                  // تدرّج خفيف أسفل الصورة لتوضيح النص
                   const _BottomGradient(),
                 ],
               ),
@@ -163,7 +163,6 @@ class _ProductDetailsState extends State<ProductDetails> {
 
                   const SizedBox(height: 16),
 
-                  // بطاقة الوصف
                   _SectionCard(
                     title: 'Description',
                     child: Text(
@@ -174,7 +173,6 @@ class _ProductDetailsState extends State<ProductDetails> {
 
                   const SizedBox(height: 12),
 
-                  // بيانات إضافية (Slug, Created/Updated)
                   _SectionCard(
                     title: 'Details',
                     child: Column(
@@ -195,7 +193,6 @@ class _ProductDetailsState extends State<ProductDetails> {
                   ),
 
                   const SizedBox(height: 24),
-                  // مسافة إضافية قبل البار السفلي
                   SizedBox(height: MediaQuery.of(context).padding.bottom + 64),
                 ],
               ),
@@ -408,13 +405,14 @@ class _BottomBar extends StatelessWidget {
               child: SizedBox(
                 height: 52,
                 child: ElevatedButton.icon(
-                  onPressed: onAddToCart,
+                  onPressed:
+                      onAddToCart, // ← نستخدم الكولباك القادم من الشاشة الأم
                   icon: const Icon(Icons.add_shopping_cart_rounded),
                   label: Text(
                     'Add to Cart • \$${(price * qty).toStringAsFixed(2)}',
                   ),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: cs.primary,
+                    backgroundColor: ColorsManager.purple,
                     foregroundColor: cs.onPrimary,
                     textStyle: const TextStyle(
                       fontSize: 16,
@@ -448,30 +446,32 @@ class _QtyControl extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
-    return Container(
-      height: 52,
-      padding: const EdgeInsets.symmetric(horizontal: 8),
-      decoration: BoxDecoration(
-        color: cs.surfaceContainerHighest,
-        borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: cs.outlineVariant),
-      ),
-      child: Row(
-        children: [
-          _IconSquare(icon: Icons.remove_rounded, onTap: onDec),
-          SizedBox(
-            width: 44,
-            child: Center(
-              child: Text(
-                '$qty',
-                style: Theme.of(
-                  context,
-                ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700),
+    return SafeArea(
+      child: Container(
+        height: 52,
+        padding: const EdgeInsets.symmetric(horizontal: 8),
+        decoration: BoxDecoration(
+          color: cs.surfaceContainerHighest,
+          borderRadius: BorderRadius.circular(14),
+          border: Border.all(color: cs.outlineVariant),
+        ),
+        child: Row(
+          children: [
+            _IconSquare(icon: Icons.remove_rounded, onTap: onDec),
+            SizedBox(
+              width: 44,
+              child: Center(
+                child: Text(
+                  '$qty',
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
               ),
             ),
-          ),
-          _IconSquare(icon: Icons.add_rounded, onTap: onInc),
-        ],
+            _IconSquare(icon: Icons.add_rounded, onTap: onInc),
+          ],
+        ),
       ),
     );
   }

@@ -1,12 +1,23 @@
-import 'package:app_store/providers/products_provider.dart' show ProductsProvider;
-import 'package:app_store/screens/home_screen.dart';
+import 'package:app_store/screens/cart.dart' show CartScreen;
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart' show ChangeNotifierProvider;
+import 'package:provider/provider.dart';
+
+import 'package:app_store/providers/products_provider.dart';
+import 'package:app_store/providers/cart_provider.dart';
+import 'package:app_store/screens/home_screen.dart';
+
 
 void main() {
- runApp(
-    ChangeNotifierProvider(
-      create: (_) => ProductsProvider(), // هنجيب الداتا مرة واحدة
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => ProductsProvider()..fetchAll(), // جيب الداتا مرة واحدة
+        ),
+        ChangeNotifierProvider(
+          create: (_) => CartProvider(), // السلة
+        ),
+      ],
       child: const MyApp(),
     ),
   );
@@ -15,16 +26,19 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'App Store',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
       ),
-      home: HomeScreen(),
+      home: const HomeScreen(),
+      routes: {
+        '/cart': (_) => const CartScreen(), // روّت سريع للسلة
+      },
     );
   }
 }

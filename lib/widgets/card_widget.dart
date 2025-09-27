@@ -4,22 +4,21 @@ import 'package:app_store/screens/product_details.dart';
 import 'package:flutter/material.dart';
 
 class CardWidget extends StatelessWidget {
-  final products product;   // ✅ لازم هنا
+  final products product;
   const CardWidget({super.key, required this.product});
 
   @override
   Widget build(BuildContext context) {
-    final imageUrl = (product.images != null && product.images!.isNotEmpty)
-        ? product.images!.first
-        : null;
+    final imageUrl =
+        (product.images != null && product.images!.isNotEmpty)
+            ? product.images!.first
+            : null;
 
     return InkWell(
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(
-            builder: (_) => ProductDetails(product: product), // ✅ نبعته للتفاصيل
-          ),
+          MaterialPageRoute(builder: (_) => ProductDetails(product: product)),
         );
       },
       child: Container(
@@ -32,7 +31,11 @@ class CardWidget extends StatelessWidget {
           ),
           borderRadius: BorderRadius.circular(20),
           boxShadow: const [
-            BoxShadow(color: Colors.black26, blurRadius: 10, offset: Offset(0, 5)),
+            BoxShadow(
+              color: Colors.black26,
+              blurRadius: 10,
+              offset: Offset(0, 5),
+            ),
           ],
         ),
         child: Padding(
@@ -40,51 +43,75 @@ class CardWidget extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                children: [
-                  Text(
-                    '${product.price ?? 0} \$',
-                    style: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w700,
-                      color: Colors.black87,
-                    ),
-                  ),
-                  const Spacer(),
-                  const Icon(Icons.favorite_border, color: Colors.red),
-                ],
-              ),
-              const SizedBox(height: 8),
+              // ✅ شلنا السعر من فوق
               Expanded(
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(16),
-                  child: imageUrl == null
-                      ? Image.asset(
-                          "assets/images/p1.png",
-                          fit: BoxFit.cover,
-                          width: double.infinity,
-                        )
-                      : Image.network(
-                          imageUrl,
-                          fit: BoxFit.cover,
-                          width: double.infinity,
-                          errorBuilder: (_, __, ___) => Image.asset(
+                  child:
+                      imageUrl == null
+                          ? Image.asset(
                             "assets/images/p1.png",
                             fit: BoxFit.cover,
                             width: double.infinity,
+                          )
+                          : Image.network(
+                            imageUrl,
+                            fit: BoxFit.cover,
+                            width: double.infinity,
+                            errorBuilder:
+                                (_, __, ___) => Image.asset(
+                                  "assets/images/p1.png",
+                                  fit: BoxFit.cover,
+                                  width: double.infinity,
+                                ),
                           ),
-                        ),
                 ),
               ),
+
               const SizedBox(height: 8),
-              Text(
-                product.title ?? 'Product',
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                  fontSize: 13,
-                  fontWeight: FontWeight.w600,
-                ),
+
+              // ✅ صف فيه الاسم على الشمال والسعر على اليمين
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      product.title ?? 'Product',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 6),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 6,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(999),
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Colors.black12,
+                          blurRadius: 4,
+                          offset: Offset(0, 2),
+                        ),
+                      ],
+                      border: Border.all(color: Colors.black12),
+                    ),
+                    child: Text(
+                      '${product.price ?? 0} \$',
+                      style: TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.bold,
+                        color: ColorsManager.lightPrimary,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
